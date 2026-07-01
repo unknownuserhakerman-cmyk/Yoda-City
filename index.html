@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✦ YodaCity — Link Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0b1a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* ─── NAV ─── */
+        .nav {
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(11,11,26,0.95);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav h1 {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 4px; }
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #e2e8f0; background: rgba(255,255,255,0.06); }
+        .nav-links a.active { color: #667eea; }
+        .btn-logout { color: #f87171 !important; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+
+        /* ─── AUTH SCREEN ─── */
+        .auth-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0b0b1a;
+        }
+        .auth-card {
+            background: #13132b;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        .auth-card h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .auth-card p { color: #94a3b8; font-size: 14px; margin-bottom: 32px; }
+        .auth-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: #f1f5f9;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+        .auth-input:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.15); }
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .auth-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(102,126,234,0.3); }
+        .auth-switch { color: #64748b; font-size: 13px; margin-top: 16px; }
+        .auth-switch a { color: #667eea; text-decoration: none; cursor: pointer; }
+        .auth-switch a:hover { text-decoration: underline; }
+
+        /* ─── DASHBOARD ─── */
+        .dash-header {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border: 1px solid rgba(102,126,234,0.15);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+        }
+        .dash-header h2 { font-size: 24px; font-weight: 700; }
+        .dash-header p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-box h3 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-box p { color: #94a3b8; font-size: 12px; margin-top: 4px; }
+
+        /* ─── TABS ─── */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 4px;
+        }
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #94a3b8;
+            border: none;
+            background: none;
+        }
+        .tab.active { background: rgba(102,126,234,0.15); color: #667eea; }
+        .tab:hover:not(.active) { color: #e2e8f0; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+        }
+        .card h3 { font-size: 18px; margin-bottom: 4px; }
+        .card p { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #f1f5f9;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.12); }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+        .btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(102,126,234,0.3); }
+        .btn-sm { padding: 8px 16px; font-size: 12px; }
+        .btn-success { background: linear-gradient(135deg,#22c55e,#16a34a); }
+        .btn-danger { background: linear-gradient(135deg,#ef4444,#dc2626); }
+
+        .link-result {
+            display: none;
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .link-result h4 { color: #4ade80; margin-bottom: 8px; }
+        .link-box {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .link-box input {
+            flex: 1;
+            padding: 12px 14px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(34,197,94,0.3);
+            border-radius: 10px;
+            color: #f1f5f9;
+            font-size: 14px;
+        }
+
+        /* ─── PROFILE PREVIEW ─── */
+        .preview-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 16px;
+        }
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .preview-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            overflow: hidden;
+        }
+        .preview-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ─── LINKS TABLE ─── */
+        .links-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .links-table th {
+            text-align: left;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .links-table td {
+            padding: 12px 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+        .links-table code {
+            background: rgba(255,255,255,0.06);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-active { background: rgba(34,197,94,0.15); color: #4ade80; }
+        .badge-disabled { background: rgba(239,68,68,0.15); color: #fca5a5; }
+        .icon-btn {
+            background: rgba(255,255,255,0.06);
+            border: none;
+            color: #94a3b8;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .icon-btn:hover { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+        .empty-state { text-align: center; padding: 60px; color: #64748b; }
+
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2,1fr); }
+            .form-row { grid-template-columns: 1fr; }
+            .form-row-3 { grid-template-columns: 1fr; }
+            .nav-links a { padding: 6px 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== AUTH SCREEN ===== -->
+    <div id="authScreen" class="auth-screen">
+        <div class="auth-card">
+            <h1>✦ YodaCity</h1>
+            <p id="authSubtitle">Sign in to your dashboard</p>
+
+            <!-- Login Form -->
+            <div id="loginForm">
+                <input class="auth-input" id="loginUser" placeholder="Username" type="text">
+                <input class="auth-input" id="loginPass" placeholder="Password" type="password">
+                <button class="auth-btn" onclick="login()">Sign In</button>
+                <p class="auth-switch">Don't have an account? <a onclick="showRegister()">Register here</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display:none;">
+                <input class="auth-input" id="regUser" placeholder="Choose a username" type="text">
+                <input class="auth-input" id="regPass" placeholder="Create a password" type="password">
+                <input class="auth-input" id="regWebhook" placeholder="Your Discord Webhook URL" type="url">
+                <button class="auth-btn" onclick="register()">Create Account</button>
+                <p class="auth-switch">Already have an account? <a onclick="showLogin()">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN APP ===== -->
+    <div id="app" style="display:none;">
+        <div class="nav">
+            <h1>✦ YodaCity</h1>
+            <div class="nav-links">
+                <a class="active" onclick="switchTab('dashboard')" id="tabDashboard">Dashboard</a>
+                <a onclick="switchTab('settings')" id="tabSettings">Settings</a>
+                <a onclick="switchTab('generator')" id="tabGenerator">Generator</a>
+                <a onclick="switchTab('links')" id="tabLinks">My Links</a>
+                <a class="btn-logout" onclick="logout()">Logout</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- DASHBOARD TAB -->
+            <div id="dashTab" class="tab-content active">
+                <div class="dash-header">
+                    <h2>Welcome back, <span id="dashUser">User</span>!</h2>
+                    <p>Your phishing link generator is ready. Create links and track victims below.</p>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-box"><h3 id="statLinks">0</h3><p>Links Created</p></div>
+                    <div class="stat-box"><h3 id="statVisits">0</h3><p>Total Visits</p></div>
+                    <div class="stat-box"><h3 id="statHits">0</h3><p>Credentials Caught</p></div>
+                    <div class="stat-box"><h3 id="statRate">0%</h3><p>Conversion Rate</p></div>
+                </div>
+                <div class="card">
+                    <h3>Quick Start</h3>
+                    <p>Go to <strong>Settings</strong> to paste your Discord webhook, then <strong>Generator</strong> to create your fake Roblox profile and get your phishing link.</p>
+                </div>
+                <div class="card">
+                    <h3>Recent Activity</h3>
+                    <p>No activity yet. Share your links to see activity here.</p>
+                </div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="settingsTab" class="tab-content">
+                <div class="card">
+                    <h3>Discord Webhook</h3>
+                    <p>All captured credentials and victim info will be sent to this webhook URL.</p>
+                    <div class="form-group">
+                        <label>Webhook URL</label>
+                        <input type="url" id="settingsWebhook" placeholder="https://discord.com/api/webhooks/...">
+                    </div>
+                    <div class="form-group" style="margin-top:4px;">
+                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                            <input type="checkbox" id="settingsPing" checked style="width:16px;height:16px;accent-color:#667eea;">
+                            <span style="text-transform:none;letter-spacing:0;font-size:14px;color:#e2e8f0;">Ping @everyone on new victim</span>
+                        </label>
+                    </div>
+                    <button class="btn" onclick="saveSettings()">Save Settings</button>
+                </div>
+                <div class="card">
+                    <h3>Account</h3>
+                    <p>Your account details.</p>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="settingsUsername" disabled style="color:#64748b;">
+                    </div>
+                    <div class="form-group">
+                        <label>Change Password</label>
+                        <input type="password" id="settingsNewPass" placeholder="New password">
+                    </div>
+                    <button class="btn" onclick="changePassword()">Update Password</button>
+                </div>
+            </div>
+
+            <!-- GENERATOR TAB -->
+            <div id="generatorTab" class="tab-content">
+                <div class="card">
+                    <h3>Create Fake Roblox Profile</h3>
+                    <p>Customize the fake profile that victims will see. Make it look like a rich player to attract targets.</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Real Name (rich player's username)</label>
+                            <input type="text" id="genRealName" placeholder="e.g. InceptionTime">
+                        </div>
+                        <div class="form-group">
+                            <label>Fake Name (shows in URL)</label>
+                            <input type="text" id="genFakeName" placeholder="e.g. giveaway">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Display Name</label>
+                        <input type="text" id="genDisplayName" placeholder="Display name on profile">
+                    </div>
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label>Friends</label>
+                            <input type="number" id="genFriends" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Followers</label>
+                            <input type="number" id="genFollowers" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Following</label>
+                            <input type="number" id="genFollowing" value="0">
+                        </div>
+                    </div>
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label>Premium</label>
+                            <select id="genPremium">
+                                <option value="none">None</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="genStatus">
+                                <option value="online">Online</option>
+                                <option value="offline">Offline</option>
+                                <option value="in-game">In Game</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Created</label>
+                            <input type="text" id="genCreated" placeholder="e.g. 3/14/2020">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description / About Me</label>
+                        <textarea id="genDescription" placeholder="Write a bio for the fake profile..."></textarea>
+                    </div>
+                    <button class="btn" onclick="generateLink()">🚀 Generate Link</button>
+
+                    <div class="link-result" id="linkResult">
+                        <h4>✅ Link Generated!</h4>
+                        <p style="color:#94a3b8;font-size:13px;margin-bottom:12px;">Send this link to your target. When they log in, you'll get their info in your Discord.</p>
+                        <div class="link-box">
+                            <input type="text" id="generatedLink" readonly>
+                            <button class="btn btn-sm btn-success" onclick="copyLink()">📋 Copy</button>
+              
