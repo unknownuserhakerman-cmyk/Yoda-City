@@ -1,7 +1,7 @@
 {
-  "name": "yodacity-cookie-checker",
+  "name": "yodacity-bot",
   "version": "1.0.0",
-  "description": "YodaCity Cookie Checker Bot - immortal.st clone backend",
+  "description": "YodaCity Cookie Checker Bot",
   "main": "bot-server.js",
   "scripts": {
     "start": "node bot-server.js"
